@@ -7,53 +7,33 @@ namespace FrequenciaDeNumeros.ConsoleApp
     {
         static void Main(string[] args)
         {
-            int maiorNumero = 0;
             int vezesDeTeste = 0;
-            int[] valoresRecebidos = new int[100];
-            
             Console.WriteLine("> Valores lidos:");
             vezesDeTeste = int.Parse(Console.ReadLine());
-            for (int i = 0;  i < vezesDeTeste;  i++)
+            int[] valoresRecebidos = new int[vezesDeTeste];
+            for (int z = 0; z < vezesDeTeste; z++)
             {
                 Console.WriteLine("> Valor:");
-                valoresRecebidos[i] = int.Parse(Console.ReadLine());
-                if(valoresRecebidos[i] > maiorNumero)
+                valoresRecebidos[z] = int.Parse(Console.ReadLine());
+            }
+            Array.Sort(valoresRecebidos); // Ordena o array > menor : maior
+            int numeroVerificador = 0;
+            int numeroQueSeraVerificado = 0;
+            while (numeroVerificador < valoresRecebidos.Length)
+            {
+                int numero = valoresRecebidos[numeroVerificador];
+                int quantidadeVezes = 0;
+                while (valoresRecebidos[numeroVerificador] == valoresRecebidos[numeroQueSeraVerificado])
                 {
-                    maiorNumero = valoresRecebidos[i];
+                    quantidadeVezes++;
+                    numeroQueSeraVerificado++;
+                    if (numeroQueSeraVerificado == valoresRecebidos.Length)
+                        break;
                 }
-            }
-            int[] todosOsValores = new int[maiorNumero];
-            foreach (int c in valoresRecebidos)
-            {
-                Console.Write(c + " ");
-            }
-            valoresRecebidos = valoresRecebidos.Where(T => T != 0).ToArray(); // Remove os 0 (ou null) de um arr
-            for (int i = 0; i <= maiorNumero; i++)
-            {
-                if(valoresRecebidos.Contains(i))
-                {
-                    todosOsValores[i] += valoresRecebidos[i];
-                }
-            }
-            Console.WriteLine("Depois de retirar os zeros:");
-            foreach (int z in valoresRecebidos)
-            {
-                Console.Write(z + " ");
-            }
-            #region Ordena -> Crescente
-            Console.WriteLine("Em ordem crescente: ");
-            Array.Sort(valoresRecebidos);
-            foreach (int y in valoresRecebidos)
-            {
-                Console.Write(y + " ");
-            }
-            #endregion
-            Console.WriteLine("Apenas os valores únicos: ");
-            System.Collections.Generic.IEnumerable<int> valoresUnicos = valoresRecebidos.Distinct<int>();
-            foreach (int l in valoresUnicos)
-            {
-                Console.Write(l + " ");
-            }
+                Console.WriteLine(numero + " apareceu " + quantidadeVezes + " vez(es),");
+                numeroVerificador = numeroQueSeraVerificado;
+            }          
+            Console.ReadKey();
         }
     }
 }
